@@ -10,18 +10,31 @@ interface ModalProps {
     onClose: () => void;
     title?: string;
     children: ReactNode;
+    className?: string;
 }
 
-export function Modal({ open, onClose, title, children }: ModalProps) {
+export function Modal({
+    open,
+    onClose,
+    title,
+    children,
+    className = "",
+}: ModalProps) {
     useEffect(() => {
         if (!open) return;
-        const handleKeyDown = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === "Escape") onClose();
+        };
+
         document.addEventListener("keydown", handleKeyDown);
-        const prev = document.body.style.overflow;
+
+        const previousOverflow = document.body.style.overflow;
         document.body.style.overflow = "hidden";
+
         return () => {
             document.removeEventListener("keydown", handleKeyDown);
-            document.body.style.overflow = prev;
+            document.body.style.overflow = previousOverflow;
         };
     }, [open, onClose]);
 
@@ -39,6 +52,7 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
                 >
                     {/* Backdrop */}
                     <motion.button
+                        type="button"
                         aria-label="Close modal"
                         className="absolute inset-0 cursor-default bg-void/75 backdrop-blur-md"
                         onClick={onClose}
@@ -52,11 +66,26 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
                         role="dialog"
                         aria-modal="true"
                         aria-labelledby={title ? "modal-title" : undefined}
-                        className="relative z-10 w-full max-w-xl overflow-hidden rounded-2xl border border-[var(--color-border-strong)] bg-[var(--color-surface)] shadow-[0_32px_80px_rgba(0,0,0,0.4)]"
-                        initial={{ opacity: 0, scale: 0.96, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.96, y: 12 }}
-                        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                        className={`relative z-10 w-full max-w-xl overflow-hidden rounded-2xl border border-[var(--color-border-strong)] bg-[var(--color-surface)] shadow-[0_32px_80px_rgba(0,0,0,0.4)] ${className}`}
+                        initial={{
+                            opacity: 0,
+                            scale: 0.96,
+                            y: 20,
+                        }}
+                        animate={{
+                            opacity: 1,
+                            scale: 1,
+                            y: 0,
+                        }}
+                        exit={{
+                            opacity: 0,
+                            scale: 0.96,
+                            y: 12,
+                        }}
+                        transition={{
+                            duration: 0.28,
+                            ease: [0.22, 1, 0.36, 1],
+                        }}
                     >
                         {/* Gradient top accent */}
                         <div className="absolute inset-x-0 top-0 h-px bg-gradient-signature opacity-40" />
@@ -70,6 +99,7 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
                                 >
                                     {title}
                                 </h2>
+
                                 <button
                                     type="button"
                                     aria-label="Close modal"
@@ -81,17 +111,19 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
                             </div>
                         )}
 
+                        {/* Content */}
                         <div className="p-6">
                             {!title && (
                                 <button
                                     type="button"
                                     aria-label="Close modal"
                                     onClick={onClose}
-                                    className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--color-border)] text-muted transition-all hover:text-ink"
+                                    className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--color-border)] text-muted transition-all hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
                                 >
                                     <X size={15} strokeWidth={2} />
                                 </button>
                             )}
+
                             {children}
                         </div>
                     </motion.div>
