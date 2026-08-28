@@ -120,8 +120,7 @@ export const projects: Project[] = [
         title: "College Admission Web Portal",
         category: "Web Application",
         description: "Web portal managing the end-to-end student admission process.",
-        coverImage: "/projects/admission-portal/cover.png",
-        screenshots: ["/profile/college_admission_html_php_project_ss.png"],
+        coverImage: "/profile/college_admission_html_php_project_ss.png", screenshots: ["/profile/college_admission_html_php_project_ss.png"],
         highlights: [
             "End-to-end admission workflow",
             "Organized, reliable data storage",
