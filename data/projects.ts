@@ -58,7 +58,7 @@ export const projects: Project[] = [
         github: "",
         live: "https://bit.ly/3UHNFWd",
         featured: false,
-        year: "2025",
+        year: "2026",
         problem:
             "Shared mess/meal management among multiple residents typically runs on manual ledgers, with no clear record of who owes what or who has access to modify shared data.",
         whatIBuilt:
