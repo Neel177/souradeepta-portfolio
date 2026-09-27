@@ -14,7 +14,9 @@ interface CinematicVideoProps {
 /** Optional media slot: fallback is immediate; video downloads only near view and stays off on reduced motion/touch. */
 export function CinematicVideo({ src, poster, className = "", mobileFallback = true, children }: CinematicVideoProps) {
     const ref = useRef<HTMLDivElement>(null);
+    const videoRef = useRef<HTMLVideoElement>(null);
     const [near, setNear] = useState(false);
+    const [loaded, setLoaded] = useState(false);
     const [failed, setFailed] = useState(false);
     const [reduced, setReduced] = useState(true);
     const [touch, setTouch] = useState(true);
@@ -25,23 +27,32 @@ export function CinematicVideo({ src, poster, className = "", mobileFallback = t
         const element = ref.current;
         if (!element || !src || !("IntersectionObserver" in window)) return;
         const observer = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) { setNear(true); observer.disconnect(); }
+            setNear(entry.isIntersecting);
+            if (entry.isIntersecting) setLoaded(true);
         }, { rootMargin: "320px 0px" });
         observer.observe(element);
         return () => observer.disconnect();
     }, [src]);
 
-    const play = Boolean(src && near && !failed && !reduced && !(mobileFallback && touch));
+    const allowed = !reduced && !(mobileFallback && touch);
+    const play = Boolean(src && loaded && near && !failed && allowed);
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+        if (play) void video.play().catch(() => undefined);
+        else video.pause();
+    }, [play]);
     return (
         <div ref={ref} className={`cinematic-video ${className}`}>
             {poster && <Image className="cinematic-video__poster" src={poster} alt="" fill sizes="100vw" />}
             <div className="cinematic-video__fallback" aria-hidden="true">{children}</div>
-            {play && (
+            {loaded && src && !failed && allowed && (
                 <video
+                    ref={videoRef}
                     className="cinematic-video__media"
                     src={src}
                     poster={poster}
-                    autoPlay
+                    autoPlay={play}
                     muted
                     loop
                     playsInline

@@ -19,8 +19,8 @@ export function CinematicBackdrop() {
         const cores = navigator.hardwareConcurrency || 4;
         const lowPower = cores <= 4 || touch;
         if (reduced || lowPower) element.dataset.quality = "low";
-        // Skip even downloading Three.js on touch, reduced-motion, and very low-core devices.
-        if (!reduced && !touch && cores > 2) setEnhanced(true);
+        // Skip even downloading Three.js on touch, reduced-motion and four-core-or-lower devices.
+        if (!reduced && !touch && cores > 4) setEnhanced(true);
 
         let frame = 0;
         const update = () => {
@@ -51,6 +51,11 @@ export function CinematicBackdrop() {
         <div ref={ref} className="cinematic-backdrop" aria-hidden="true">
             <div className="cinematic-backdrop__field" />
             <div className="cinematic-backdrop__orb" />
+            <div className="cinematic-backdrop__city">
+                <span /><span /><span /><span /><span /><span /><span />
+                <i className="cinematic-backdrop__desk" />
+                <i className="cinematic-backdrop__person" />
+            </div>
             <div className="cinematic-backdrop__grid" />
             <div className="cinematic-backdrop__beam" />
         </div>

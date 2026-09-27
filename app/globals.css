@@ -122,6 +122,30 @@ body {
     inset: 0;
 }
 
+/* Low-power / touch fallback: a quiet CSS cutaway of the same city, desk and laptop. */
+.cinematic-backdrop__city { display: none; position: absolute; inset: auto 0 5vh; height: 34vh; opacity: .74; }
+.cinematic-backdrop__city > span {
+    position: absolute; bottom: 3.1rem; width: 8%; border: 1px solid rgba(161,197,215,.16);
+    background: linear-gradient(90deg, rgba(57,75,96,.72), rgba(42,58,77,.86));
+    background-image: repeating-linear-gradient(0deg, transparent 0 12px, rgba(255,216,158,.14) 12px 14px), repeating-linear-gradient(90deg, transparent 0 12px, rgba(255,216,158,.12) 12px 14px), linear-gradient(90deg, #31455d, #526b7b);
+    clip-path: polygon(0 7%, 15% 7%, 15% 0, 85% 0, 85% 11%, 100% 11%, 100% 100%, 0 100%);
+}
+.cinematic-backdrop__city > span:nth-child(1) { left: 2%; height: 34%; width: 10%; }
+.cinematic-backdrop__city > span:nth-child(2) { left: 14%; height: 55%; width: 9%; }
+.cinematic-backdrop__city > span:nth-child(3) { left: 26%; height: 42%; width: 12%; }
+.cinematic-backdrop__city > span:nth-child(4) { left: 42%; height: 65%; width: 11%; }
+.cinematic-backdrop__city > span:nth-child(5) { left: 57%; height: 48%; width: 10%; }
+.cinematic-backdrop__city > span:nth-child(6) { left: 71%; height: 56%; width: 12%; }
+.cinematic-backdrop__city > span:nth-child(7) { left: 87%; height: 38%; width: 10%; }
+.cinematic-backdrop__city::after {
+    content: ""; position: absolute; z-index: 1; inset: auto 0 2.65rem; height: .12rem;
+    background: linear-gradient(90deg, transparent, rgba(105,205,222,.7), transparent);
+}
+.cinematic-backdrop__desk { position: absolute; z-index: 3; right: 15%; bottom: 2.6rem; width: 25%; height: .45rem; background: #75889a; border-radius: 2px; }
+.cinematic-backdrop__desk::before { content: ""; position: absolute; left: 38%; bottom: .4rem; width: 25%; height: 2.7rem; border: 2px solid #a8c4d0; border-radius: 6px 6px 1px 1px; background: linear-gradient(135deg,rgba(80,188,207,.6),rgba(97,98,160,.45)); }
+.cinematic-backdrop__person { position: absolute; z-index: 2; right: 26%; bottom: 3rem; width: 2.2rem; height: 3.25rem; border-radius: 1.4rem 1.4rem .55rem .55rem; background: linear-gradient(#5782a2 0 66%, #354b64 66%); }
+.cinematic-backdrop__person::before { content: ""; position: absolute; left: .46rem; top: -.95rem; width: 1.25rem; height: 1.35rem; border-radius: 50%; background: #c79072; box-shadow: 0 -.22rem 0 .05rem #3d3a48; }
+
 .cinematic-backdrop__field {
     background: var(--gradient-hero-night);
     opacity: .9;
@@ -232,6 +256,8 @@ main > section h1, main > section h2 { translate: 0 var(--cinematic-depth, 0px);
 .cinematic-backdrop[data-quality="low"] .cinematic-backdrop__grid,
 .cinematic-backdrop[data-quality="low"] .cinematic-backdrop__beam { display: none; }
 .cinematic-backdrop[data-quality="low"] .cinematic-backdrop__orb { filter: none; opacity: .32; }
+.cinematic-backdrop[data-quality="low"] .cinematic-backdrop__city { display: block; }
+@media (max-width: 700px) { .cinematic-backdrop__city { display: block; } }
 
 /* ─────────────────────────────────────────────────────────────
    CUSTOM SCROLLBAR
