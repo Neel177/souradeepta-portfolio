@@ -82,7 +82,7 @@ export function LiveProjectPreview({
                             ? "opacity-100"
                             : "opacity-0"
                         }`}
-                    loading="eager"
+                    loading="lazy"
                     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
                     onLoad={() => setState("live")}
                     onError={() => setState("blocked")}

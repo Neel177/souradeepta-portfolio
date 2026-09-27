@@ -75,7 +75,7 @@ export function Projects() {
                                 className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-border-strong)] hover:shadow-card-hover"
                             >
                                 {/* Preview */}
-                                <div className="relative overflow-hidden">
+                                <div className={`relative overflow-hidden ${project.slug === "cgc-erp-platform" ? "cgc-project-plane" : ""}`}>
                                     <LiveProjectPreview
                                         live={project.live}
                                         fallbackSrc={project.coverImage || project.screenshots[0]}

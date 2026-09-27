@@ -7,10 +7,12 @@ import { Hero } from "@/sections/Hero";
 import { Projects } from "@/sections/Projects";
 import { Skills } from "@/sections/Skills";
 import { Footer } from "@/components/Footer";
+import { CinematicBackdrop } from "@/components/CinematicBackdrop";
 
 export default function HomePage() {
     return (
         <main className="w-full min-w-0">
+            <CinematicBackdrop />
             <Navbar />
             <Hero />
             <About />

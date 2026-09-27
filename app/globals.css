@@ -101,6 +101,138 @@ body {
         color 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Quiet cinematic layer: one CSS environment gives depth without a continuously rendering canvas. */
+.cinematic-backdrop {
+    --scroll-progress: 0;
+    --scroll-y: 0px;
+    position: fixed;
+    z-index: -1;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    contain: strict;
+    background: var(--color-void);
+}
+
+.cinematic-backdrop__field,
+.cinematic-backdrop__orb,
+.cinematic-backdrop__grid,
+.cinematic-backdrop__beam {
+    position: absolute;
+    inset: 0;
+}
+
+.cinematic-backdrop__field {
+    background: var(--gradient-hero-night);
+    opacity: .9;
+}
+
+.cinematic-backdrop__orb {
+    inset: auto -12vw 42vh auto;
+    width: min(54vw, 680px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle at 36% 34%, rgba(34,211,238,.14), rgba(129,140,248,.11) 34%, rgba(167,139,250,.045) 56%, transparent 72%);
+    filter: blur(2px);
+    transform: translate3d(0, calc(var(--scroll-y) * -1), 0) scale(calc(1 + var(--scroll-progress) * .16));
+    opacity: calc(.8 - var(--scroll-progress) * .28);
+}
+
+.cinematic-backdrop__grid {
+    inset: 42vh -22vw -40vh;
+    background-image: linear-gradient(rgba(130,148,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(130,148,255,.045) 1px, transparent 1px);
+    background-size: 74px 74px;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 24%, black 72%, transparent 100%);
+    transform: perspective(700px) rotateX(58deg) translate3d(0, calc(var(--scroll-y) * -.25), 0);
+    transform-origin: center top;
+    opacity: .42;
+}
+
+.cinematic-backdrop__beam {
+    inset: 0 0 auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(34,211,238,.3), rgba(167,139,250,.2), transparent);
+    opacity: calc(.25 + var(--scroll-progress) * .35);
+}
+
+main { position: relative; isolation: isolate; }
+main > section { position: relative; z-index: 1; }
+
+.cinematic-world {
+    position: fixed;
+    z-index: 0;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    contain: strict;
+    opacity: .88;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 9%, black 82%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, black 9%, black 82%, transparent);
+}
+.cinematic-world canvas { display: block; width: 100%; height: 100%; }
+.cinematic-world[data-quality="low"] { opacity: .5; }
+.cinematic-world[data-failed="true"] { display: none; }
+
+.cinematic-cursor {
+    position: fixed; z-index: 100; top: 0; left: 0; width: 8px; height: 8px;
+    border: 1px solid rgba(129,220,255,.78); border-radius: 50%; pointer-events: none;
+    opacity: 0; transition: width 180ms ease, height 180ms ease, opacity 180ms ease, border-color 180ms ease;
+    will-change: transform;
+}
+.cinematic-cursor span { position: absolute; inset: 2px; border-radius: inherit; background: rgba(115,215,255,.65); box-shadow: 0 0 12px rgba(82,198,245,.6); }
+body.has-cinematic-cursor .cinematic-cursor { opacity: 1; }
+body.has-cinematic-cursor .cinematic-cursor[data-active="true"] { width: 18px; height: 18px; border-color: rgba(174,157,255,.9); }
+.has-cinematic-cursor a, .has-cinematic-cursor button, .has-cinematic-cursor [role="button"] { cursor: none; }
+
+.cinematic-video { position: relative; isolation: isolate; overflow: hidden; background: radial-gradient(ellipse at 65% 38%, rgba(34,211,238,.16), transparent 42%), radial-gradient(ellipse at 34% 62%, rgba(129,140,248,.17), transparent 50%), var(--color-surface-2); }
+.cinematic-video__poster, .cinematic-video__media, .cinematic-video__fallback { position: absolute; inset: 0; width: 100%; height: 100%; }
+.cinematic-video__poster, .cinematic-video__media { object-fit: cover; }
+.cinematic-video__fallback { z-index: 0; background: radial-gradient(ellipse at 50% 50%, transparent 5%, rgba(8,8,14,.14) 75%); }
+.cinematic-video__poster { z-index: -1; }
+.cinematic-video__media { z-index: 1; }
+
+/* The live CGC interface stays crisp; shallow wireframe planes add depth around its frame. */
+.cgc-project-plane { perspective: 1100px; isolation: isolate; }
+.cgc-project-plane::before, .cgc-project-plane::after {
+    content: ""; position: absolute; z-index: 2; border: 1px solid rgba(167,139,250,.2);
+    border-radius: 8px; background: transparent; pointer-events: none;
+    transition: transform 700ms cubic-bezier(.2,.75,.2,1), opacity 500ms ease;
+}
+.cgc-project-plane::before { inset: 2% 1.5%; transform: translate3d(8px,-5px,16px) rotateY(-1deg); opacity: .68; }
+.cgc-project-plane::after { inset: 7% 5%; transform: translate3d(-5px,4px,20px) rotateY(1deg); opacity: .42; }
+.cgc-project-plane > * { position: relative; z-index: 1; transform: translateZ(8px); transition: transform 700ms cubic-bezier(.2,.75,.2,1); }
+.group:hover .cgc-project-plane::before { transform: translate3d(12px,-8px,24px) rotateY(-2deg); opacity: .82; }
+.group:hover .cgc-project-plane::after { transform: translate3d(-8px,6px,30px) rotateY(2deg); opacity: .56; }
+.group:hover .cgc-project-plane > * { transform: translateZ(20px); }
+
+main > section h1, main > section h2 { translate: 0 var(--cinematic-depth, 0px); }
+
+/* Editorial section cues and card depth, kept low-cost and disabled for constrained devices. */
+#about, #skills, #projects, #experience, #achievements, #contact {
+    background-image: linear-gradient(180deg, transparent, color-mix(in srgb, var(--color-void) 14%, transparent) 18%, transparent 82%);
+}
+
+#projects article:first-child {
+    box-shadow: 0 0 0 1px rgba(167,139,250,.035), 0 28px 90px rgba(56,42,120,.12);
+}
+
+@media (max-width: 700px), (prefers-reduced-motion: reduce) {
+    .cinematic-backdrop__grid,
+    .cinematic-backdrop__beam { display: none; }
+    .cinematic-backdrop__orb { width: 80vw; opacity: .35; filter: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cinematic-world, .cinematic-cursor { display: none !important; }
+    main > section h1, main > section h2 { translate: none; }
+    .cgc-project-plane::before, .cgc-project-plane::after, .cgc-project-plane > * { transform: none !important; }
+    .cinematic-backdrop__orb { transform: none !important; }
+}
+
+.cinematic-backdrop[data-quality="low"] .cinematic-backdrop__grid,
+.cinematic-backdrop[data-quality="low"] .cinematic-backdrop__beam { display: none; }
+.cinematic-backdrop[data-quality="low"] .cinematic-backdrop__orb { filter: none; opacity: .32; }
+
 /* ─────────────────────────────────────────────────────────────
    CUSTOM SCROLLBAR
    ───────────────────────────────────────────────────────────── */

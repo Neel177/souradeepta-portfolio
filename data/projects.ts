@@ -7,8 +7,8 @@ export const projects: Project[] = [
         category: "Full Stack Web Application",
         description:
             "Production-grade ERP for student management, fee tracking, and administrative analytics — live at cgcmid.in.",
-        coverImage: "/projects/cgc-erp/cover.png",
-        screenshots: ["/projects/cgc-erp/1.png", "/projects/cgc-erp/2.png"],
+        coverImage: "",
+        screenshots: [],
         highlights: [
             "Secure authentication with role-based access control",
             "Automated fee management workflows",
@@ -45,8 +45,8 @@ export const projects: Project[] = [
         title: "Hari Bhanga",
         category: "Full Stack Web Application",
         description: "Multi-user mess management platform with role-based access and live sync.",
-        coverImage: "/projects/hari-bhanga/cover.png",
-        screenshots: ["/projects/hari-bhanga/1.png", "/projects/hari-bhanga/2.png"],
+        coverImage: "",
+        screenshots: [],
         highlights: [
             "Authentication system",
             "Role-based permissions",
@@ -84,8 +84,8 @@ export const projects: Project[] = [
         title: "Mock Test Learning App",
         category: "Android Application",
         description: "Android app for structured exam prep with practice sets and progress tracking.",
-        coverImage: "/projects/mock-test-app/cover.png",
-        screenshots: ["/projects/mock-test-app/1.png"],
+        coverImage: "",
+        screenshots: [],
         highlights: [
             "Real-time data handling with Firebase",
             "Structured question-set practice",
