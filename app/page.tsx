@@ -7,12 +7,10 @@ import { Hero } from "@/sections/Hero";
 import { Projects } from "@/sections/Projects";
 import { Skills } from "@/sections/Skills";
 import { Footer } from "@/components/Footer";
-import { SoftwareReactor } from "@/components/SoftwareReactor";
 
 export default function HomePage() {
     return (
         <main className="w-full min-w-0">
-            <SoftwareReactor />
             <Navbar />
             <Hero />
             <About />
