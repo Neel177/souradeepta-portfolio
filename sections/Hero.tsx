@@ -47,7 +47,6 @@ export function Hero() {
             >
                 {/* Ambient background gradients */}
                 <div className="pointer-events-none absolute inset-0 bg-gradient-hero" />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[var(--color-void)]/75 via-[var(--color-void)]/35 to-transparent" />
 
                 <div className="pointer-events-none absolute -top-40 left-1/2 h-[32rem] w-[42rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(167,139,250,0.08)_0%,transparent_70%)] blur-3xl" />
 

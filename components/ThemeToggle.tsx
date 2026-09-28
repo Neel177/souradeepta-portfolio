@@ -7,11 +7,20 @@ import { useTheme } from "@/components/ThemeProvider";
 export function ThemeToggle() {
     const { theme, toggle } = useTheme();
     const day = theme === "day";
+    const handleToggle = () => {
+        try {
+            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            if (!reduceMotion && "vibrate" in navigator) navigator.vibrate(8);
+        } catch {
+            // Vibration is optional and unavailable in several browsers.
+        }
+        toggle();
+    };
 
     return (
         <button
             type="button"
-            onClick={toggle}
+            onClick={handleToggle}
             aria-label={`Switch to ${day ? "night" : "day"} theme`}
             className="relative flex h-8 w-[3.25rem] items-center rounded-full border border-[var(--color-border-strong)] bg-[var(--color-surface-2)] p-0.5 text-muted transition-all duration-300 hover:border-[var(--color-border-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
         >

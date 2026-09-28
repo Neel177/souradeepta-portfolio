@@ -101,163 +101,56 @@ body {
         color 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Quiet cinematic layer: one CSS environment gives depth without a continuously rendering canvas. */
-.cinematic-backdrop {
-    --scroll-progress: 0;
-    --scroll-y: 0px;
-    position: fixed;
-    z-index: -1;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-    contain: strict;
-    background: var(--color-void);
-}
-
-.cinematic-backdrop__field,
-.cinematic-backdrop__orb,
-.cinematic-backdrop__grid,
-.cinematic-backdrop__beam {
-    position: absolute;
-    inset: 0;
-}
-
-/* Low-power / touch fallback: a quiet CSS cutaway of the same city, desk and laptop. */
-.cinematic-backdrop__city { display: none; position: absolute; inset: auto 0 5vh; height: 34vh; opacity: .74; }
-.cinematic-backdrop__city > span {
-    position: absolute; bottom: 3.1rem; width: 8%; border: 1px solid rgba(161,197,215,.16);
-    background: linear-gradient(90deg, rgba(57,75,96,.72), rgba(42,58,77,.86));
-    background-image: repeating-linear-gradient(0deg, transparent 0 12px, rgba(255,216,158,.14) 12px 14px), repeating-linear-gradient(90deg, transparent 0 12px, rgba(255,216,158,.12) 12px 14px), linear-gradient(90deg, #31455d, #526b7b);
-    clip-path: polygon(0 7%, 15% 7%, 15% 0, 85% 0, 85% 11%, 100% 11%, 100% 100%, 0 100%);
-}
-.cinematic-backdrop__city > span:nth-child(1) { left: 2%; height: 34%; width: 10%; }
-.cinematic-backdrop__city > span:nth-child(2) { left: 14%; height: 55%; width: 9%; }
-.cinematic-backdrop__city > span:nth-child(3) { left: 26%; height: 42%; width: 12%; }
-.cinematic-backdrop__city > span:nth-child(4) { left: 42%; height: 65%; width: 11%; }
-.cinematic-backdrop__city > span:nth-child(5) { left: 57%; height: 48%; width: 10%; }
-.cinematic-backdrop__city > span:nth-child(6) { left: 71%; height: 56%; width: 12%; }
-.cinematic-backdrop__city > span:nth-child(7) { left: 87%; height: 38%; width: 10%; }
-.cinematic-backdrop__city::after {
-    content: ""; position: absolute; z-index: 1; inset: auto 0 2.65rem; height: .12rem;
-    background: linear-gradient(90deg, transparent, rgba(105,205,222,.7), transparent);
-}
-.cinematic-backdrop__desk { position: absolute; z-index: 3; right: 15%; bottom: 2.6rem; width: 25%; height: .45rem; background: #75889a; border-radius: 2px; }
-.cinematic-backdrop__desk::before { content: ""; position: absolute; left: 38%; bottom: .4rem; width: 25%; height: 2.7rem; border: 2px solid #a8c4d0; border-radius: 6px 6px 1px 1px; background: linear-gradient(135deg,rgba(80,188,207,.6),rgba(97,98,160,.45)); }
-.cinematic-backdrop__person { position: absolute; z-index: 2; right: 26%; bottom: 3rem; width: 2.2rem; height: 3.25rem; border-radius: 1.4rem 1.4rem .55rem .55rem; background: linear-gradient(#5782a2 0 66%, #354b64 66%); }
-.cinematic-backdrop__person::before { content: ""; position: absolute; left: .46rem; top: -.95rem; width: 1.25rem; height: 1.35rem; border-radius: 50%; background: #c79072; box-shadow: 0 -.22rem 0 .05rem #3d3a48; }
-
-.cinematic-backdrop__field {
-    background: var(--gradient-hero-night);
-    opacity: .9;
-}
-
-.cinematic-backdrop__orb {
-    inset: auto -12vw 42vh auto;
-    width: min(54vw, 680px);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: radial-gradient(circle at 36% 34%, rgba(34,211,238,.14), rgba(129,140,248,.11) 34%, rgba(167,139,250,.045) 56%, transparent 72%);
-    filter: blur(2px);
-    transform: translate3d(0, calc(var(--scroll-y) * -1), 0) scale(calc(1 + var(--scroll-progress) * .16));
-    opacity: calc(.8 - var(--scroll-progress) * .28);
-}
-
-.cinematic-backdrop__grid {
-    inset: 42vh -22vw -40vh;
-    background-image: linear-gradient(rgba(130,148,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(130,148,255,.045) 1px, transparent 1px);
-    background-size: 74px 74px;
-    mask-image: linear-gradient(to bottom, transparent 0%, black 24%, black 72%, transparent 100%);
-    transform: perspective(700px) rotateX(58deg) translate3d(0, calc(var(--scroll-y) * -.25), 0);
-    transform-origin: center top;
-    opacity: .42;
-}
-
-.cinematic-backdrop__beam {
-    inset: 0 0 auto;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(34,211,238,.3), rgba(167,139,250,.2), transparent);
-    opacity: calc(.25 + var(--scroll-progress) * .35);
-}
-
+/* Foreground-safe generative background: one restrained software reactor. */
 main { position: relative; isolation: isolate; }
-main > section { position: relative; z-index: 1; }
-
-.cinematic-world {
+main > section, main > footer { position: relative; z-index: 1; }
+.software-reactor {
     position: fixed;
     z-index: 0;
     inset: 0;
     overflow: hidden;
     pointer-events: none;
+    opacity: .3;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, .14) 30%, rgba(0, 0, 0, .72) 48%, #000 62%);
+    mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, .14) 30%, rgba(0, 0, 0, .72) 48%, #000 62%);
     contain: strict;
-    opacity: .88;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, black 9%, black 82%, transparent);
-    mask-image: linear-gradient(to bottom, transparent, black 9%, black 82%, transparent);
 }
-.cinematic-world canvas { display: block; width: 100%; height: 100%; }
-.cinematic-world[data-quality="low"] { opacity: .5; }
-.cinematic-world[data-failed="true"] { display: none; }
-
-.cinematic-cursor {
-    position: fixed; z-index: 100; top: 0; left: 0; width: 8px; height: 8px;
-    border: 1px solid rgba(129,220,255,.78); border-radius: 50%; pointer-events: none;
-    opacity: 0; transition: width 180ms ease, height 180ms ease, opacity 180ms ease, border-color 180ms ease;
-    will-change: transform;
+.software-reactor canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.software-reactor[data-webgl="true"] .software-reactor__fallback { display: none; }
+.software-reactor__fallback {
+    position: absolute;
+    top: 13vh;
+    left: 31vw;
+    width: min(54vw, 700px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    opacity: .82;
+    background: radial-gradient(circle at 50% 50%, rgba(31, 161, 206, .1) 0 18%, rgba(86, 101, 220, .06) 30%, transparent 58% 100%);
 }
-.cinematic-cursor span { position: absolute; inset: 2px; border-radius: inherit; background: rgba(115,215,255,.65); box-shadow: 0 0 12px rgba(82,198,245,.6); }
-body.has-cinematic-cursor .cinematic-cursor { opacity: 1; }
-body.has-cinematic-cursor .cinematic-cursor[data-active="true"] { width: 18px; height: 18px; border-color: rgba(174,157,255,.9); }
-.has-cinematic-cursor a, .has-cinematic-cursor button, .has-cinematic-cursor [role="button"] { cursor: none; }
-
-.cinematic-video { position: relative; isolation: isolate; overflow: hidden; background: radial-gradient(ellipse at 65% 38%, rgba(34,211,238,.16), transparent 42%), radial-gradient(ellipse at 34% 62%, rgba(129,140,248,.17), transparent 50%), var(--color-surface-2); }
-.cinematic-video__poster, .cinematic-video__media, .cinematic-video__fallback { position: absolute; inset: 0; width: 100%; height: 100%; }
-.cinematic-video__poster, .cinematic-video__media { object-fit: cover; }
-.cinematic-video__fallback { z-index: 0; background: radial-gradient(ellipse at 50% 50%, transparent 5%, rgba(8,8,14,.14) 75%); }
-.cinematic-video__poster { z-index: -1; }
-.cinematic-video__media { z-index: 1; }
-
-/* The live CGC interface stays crisp; shallow wireframe planes add depth around its frame. */
-.cgc-project-plane { perspective: 1100px; isolation: isolate; }
-.cgc-project-plane::before, .cgc-project-plane::after {
-    content: ""; position: absolute; z-index: 2; border: 1px solid rgba(167,139,250,.2);
-    border-radius: 8px; background: transparent; pointer-events: none;
-    transition: transform 700ms cubic-bezier(.2,.75,.2,1), opacity 500ms ease;
+.software-reactor__fallback::before {
+    content: "";
+    position: absolute;
+    inset: 25%;
+    border: 1px solid rgba(71, 172, 221, .36);
+    border-radius: 50%;
+    background: radial-gradient(circle at 34% 28%, rgba(203, 247, 255, .62), rgba(48, 177, 211, .24) 35%, rgba(102, 97, 222, .2) 63%, rgba(44, 77, 137, .08));
+    box-shadow: inset -12px -15px 36px rgba(104, 120, 218, .14), 0 0 56px rgba(75, 160, 215, .12);
 }
-.cgc-project-plane::before { inset: 2% 1.5%; transform: translate3d(8px,-5px,16px) rotateY(-1deg); opacity: .68; }
-.cgc-project-plane::after { inset: 7% 5%; transform: translate3d(-5px,4px,20px) rotateY(1deg); opacity: .42; }
-.cgc-project-plane > * { position: relative; z-index: 1; transform: translateZ(8px); transition: transform 700ms cubic-bezier(.2,.75,.2,1); }
-.group:hover .cgc-project-plane::before { transform: translate3d(12px,-8px,24px) rotateY(-2deg); opacity: .82; }
-.group:hover .cgc-project-plane::after { transform: translate3d(-8px,6px,30px) rotateY(2deg); opacity: .56; }
-.group:hover .cgc-project-plane > * { transform: translateZ(20px); }
-
-main > section h1, main > section h2 { translate: 0 var(--cinematic-depth, 0px); }
-
-/* Editorial section cues and card depth, kept low-cost and disabled for constrained devices. */
-#about, #skills, #projects, #experience, #achievements, #contact {
-    background-image: linear-gradient(180deg, transparent, color-mix(in srgb, var(--color-void) 14%, transparent) 18%, transparent 82%);
+.software-reactor__fallback::after {
+    content: "";
+    position: absolute;
+    inset: 10%;
+    border: 1px solid rgba(91, 171, 230, .3);
+    border-radius: 50%;
+    transform: rotateX(58deg) rotate(-22deg);
+    box-shadow: 0 0 0 24px rgba(119, 125, 220, .04), 0 0 0 52px rgba(183, 102, 216, .025), inset 0 0 24px rgba(119, 125, 220, .06);
 }
-
-#projects article:first-child {
-    box-shadow: 0 0 0 1px rgba(167,139,250,.035), 0 28px 90px rgba(56,42,120,.12);
+:root[data-theme="day"] .software-reactor__fallback { opacity: .8; }
+:root[data-theme="day"] .software-reactor__fallback::before {
+    background: radial-gradient(circle at 34% 28%, rgba(255, 255, 255, .85), rgba(125, 217, 224, .2) 38%, rgba(156, 145, 227, .14) 68%, rgba(255, 255, 255, .03));
+    border-color: rgba(64, 154, 188, .22);
 }
-
-@media (max-width: 700px), (prefers-reduced-motion: reduce) {
-    .cinematic-backdrop__grid,
-    .cinematic-backdrop__beam { display: none; }
-    .cinematic-backdrop__orb { width: 80vw; opacity: .35; filter: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .cinematic-world, .cinematic-cursor { display: none !important; }
-    main > section h1, main > section h2 { translate: none; }
-    .cgc-project-plane::before, .cgc-project-plane::after, .cgc-project-plane > * { transform: none !important; }
-    .cinematic-backdrop__orb { transform: none !important; }
-}
-
-.cinematic-backdrop[data-quality="low"] .cinematic-backdrop__grid,
-.cinematic-backdrop[data-quality="low"] .cinematic-backdrop__beam { display: none; }
-.cinematic-backdrop[data-quality="low"] .cinematic-backdrop__orb { filter: none; opacity: .32; }
-.cinematic-backdrop[data-quality="low"] .cinematic-backdrop__city { display: block; }
-@media (max-width: 700px) { .cinematic-backdrop__city { display: block; } }
+:root[data-theme="day"] .software-reactor__fallback::after { border-color: rgba(69, 151, 185, .2); }
 
 /* ─────────────────────────────────────────────────────────────
    CUSTOM SCROLLBAR
@@ -367,10 +260,18 @@ body.theme-day .hover\:bg-white\/\[0\.07\]:hover {
 /* ─────────────────────────────────────────────────────────────
    REDUCED MOTION
    ───────────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+    .software-reactor { opacity: .11; }
+    .software-reactor__fallback { top: 28vh; left: 58vw; right: auto; width: 80vw; }
+}
+
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
     }
+
+    .software-reactor { opacity: .26; }
+    .software-reactor[data-webgl="true"] .software-reactor__fallback { display: block; }
 
     *,
     *::before,
