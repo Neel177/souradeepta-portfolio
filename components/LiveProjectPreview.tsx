@@ -44,7 +44,7 @@ export function LiveProjectPreview({
     return (
         <div
             ref={containerRef}
-            className="group relative aspect-video overflow-hidden bg-[var(--color-surface-2)]"
+            className="group relative aspect-video overflow-hidden bg-[var(--color-surface-2)] lg:aspect-auto lg:h-full lg:min-h-[25rem]"
         >
             {/* Beautiful fallback/background */}
             <div
@@ -140,7 +140,7 @@ export function LiveProjectPreview({
                     alt={alt}
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
-                    className={`relative z-[1] h-full w-full object-cover transition-opacity duration-700 ${state === "live"
+                    className={`relative z-[1] h-full w-full object-cover transition-transform duration-200 group-hover:scale-[1.01] ${state === "live"
                             ? "opacity-0"
                             : "opacity-100"
                         }`}

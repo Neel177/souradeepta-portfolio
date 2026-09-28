@@ -20,14 +20,14 @@ export function SectionHeading({ eyebrow, title, description, align = "left" }: 
             whileInView="show"
             viewport={viewportOnce}
         >
-            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-cyan">
+            <p className="font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-cyan sm:text-[11px] sm:tracking-[0.22em]">
                 {eyebrow}
             </p>
-            <h2 className="mt-3 font-display text-3xl font-bold leading-tight tracking-[-0.04em] text-ink sm:text-4xl">
+            <h2 className="mt-3 font-display text-[clamp(1.85rem,4vw,2.75rem)] font-semibold leading-[1.12] tracking-[-0.045em] text-ink">
                 {title}
             </h2>
             {description && (
-                <p className="mt-4 text-[15px] leading-7 text-muted">
+                <p className="mt-4 max-w-[60ch] text-[15px] leading-7 text-muted sm:text-base sm:leading-[1.8]">
                     {description}
                 </p>
             )}

@@ -24,7 +24,7 @@ export function Experience() {
     const schoolEducation = experience.filter((item) => item.educationLevel === "school");
 
     return (
-        <section id="experience" className="px-5 py-24 sm:px-8 lg:px-10 lg:py-32">
+        <section id="experience" className="px-5 py-20 sm:px-8 sm:py-24 lg:px-10 lg:py-28">
             <div className="mx-auto max-w-6xl">
                 <SectionHeading
                     eyebrow="The path so far"
@@ -32,7 +32,7 @@ export function Experience() {
                     description="An evolving practice built through classrooms, coursework, and software shipped for real people."
                 />
 
-                <div className="relative mt-14 space-y-0">
+                <div className="relative mt-10 space-y-0 sm:mt-12">
                     {/* Timeline line — gradient */}
                     <div className="absolute bottom-4 left-[1.35rem] top-4 w-px bg-gradient-to-b from-amber/60 via-violet/40 to-violet/20 sm:left-[1.85rem]" />
 
@@ -49,7 +49,7 @@ export function Experience() {
 
                                 {/* Card */}
                                 <div
-                                    className="rounded-2xl border border-[var(--color-border)] border-l-2 bg-[var(--color-surface)] p-5 transition-colors hover:border-[var(--color-border-strong)] sm:p-6"
+                                    className="rounded-[1.25rem] border border-[var(--color-border)] border-l-2 bg-[var(--color-surface)] p-5 transition-colors duration-200 hover:border-[var(--color-border-strong)] sm:p-6"
                                     style={style.accentStyle}
                                 >
                                     <div className="flex flex-wrap items-start justify-between gap-3">

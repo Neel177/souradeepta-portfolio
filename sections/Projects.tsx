@@ -63,7 +63,7 @@ export function Projects() {
                     initial="hidden"
                     whileInView="show"
                     viewport={viewportOnce}
-                    className="mt-12 grid gap-5 lg:grid-cols-2"
+                    className="mt-10 grid gap-5 lg:grid-cols-2 lg:gap-6"
                 >
                     {featuredFirst.map((project) => {
                         const style = projectStyles[project.slug] ?? fallbackStyle;
@@ -72,10 +72,10 @@ export function Projects() {
                             <motion.article
                                 key={project.slug}
                                 variants={slideUp}
-                                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-border-strong)] hover:shadow-card-hover"
+                                className={`group flex h-full flex-col overflow-hidden rounded-[1.35rem] border bg-[var(--color-surface)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--color-border-strong)] hover:shadow-card ${project.slug === "cgc-erp-platform" ? "border-[var(--color-border-strong)] lg:col-span-2 lg:grid lg:grid-cols-[1.1fr_0.9fr]" : "border-[var(--color-border)]"}`}
                             >
                                 {/* Preview */}
-                                <div className="relative overflow-hidden">
+                                <div className={`relative overflow-hidden ${project.slug === "cgc-erp-platform" ? "lg:min-h-[25rem]" : ""}`}>
                                     <LiveProjectPreview
                                         live={project.live}
                                         fallbackSrc={project.coverImage || project.screenshots[0]}
@@ -85,7 +85,7 @@ export function Projects() {
                                 </div>
 
                                 {/* Content */}
-                                <div className="flex flex-1 flex-col p-6 sm:p-7">
+                                <div className={`flex flex-1 flex-col p-5 sm:p-7 ${project.slug === "cgc-erp-platform" ? "lg:p-8" : ""}`}>
                                     {/* Header */}
                                     <div className="flex items-start justify-between gap-4">
                                         <div className="min-w-0">

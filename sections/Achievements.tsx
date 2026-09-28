@@ -69,7 +69,7 @@ export function Achievements() {
                         return (
                             <SectionReveal key={achievement.id}>
                                 <div
-                                    className={`group flex gap-4 rounded-2xl border p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-border-strong)] hover:shadow-card sm:p-6 ${s.border} bg-[var(--color-surface)]`}
+                                    className={`group flex gap-4 rounded-[1.25rem] border p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--color-border-strong)] hover:shadow-card sm:p-6 ${s.border} bg-[var(--color-surface)]`}
                                 >
                                     {/* Icon */}
                                     <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${s.bg}`}>

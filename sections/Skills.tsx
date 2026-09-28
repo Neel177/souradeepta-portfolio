@@ -61,7 +61,7 @@ export function Skills() {
                     initial="hidden"
                     whileInView="show"
                     viewport={viewportOnce}
-                    className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+                    className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5"
                 >
                     {skillCategories.map((category, index) => {
                         const Icon = resolveIcon(category.icon);
@@ -71,7 +71,7 @@ export function Skills() {
                             <motion.div
                                 key={category.name}
                                 variants={slideUp}
-                                className={`group relative overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-border-strong)] sm:p-7 ${accent.glow}`}
+                                className={`group relative overflow-hidden rounded-[1.25rem] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--color-border-strong)] hover:shadow-card sm:p-6 ${accent.glow}`}
                             >
                                 {/* Gradient accent bar */}
                                 <div className={`absolute inset-x-0 top-0 h-px bg-gradient-to-r ${accent.bar}`} />
@@ -84,7 +84,7 @@ export function Skills() {
                                     </span>
                                 </div>
 
-                                <h3 className="mt-8 font-display text-lg font-semibold tracking-[-0.025em] text-ink">
+                                <h3 className="mt-6 font-display text-lg font-semibold tracking-[-0.025em] text-ink">
                                     {category.name}
                                 </h3>
 

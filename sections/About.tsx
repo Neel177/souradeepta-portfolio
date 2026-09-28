@@ -35,19 +35,19 @@ export function About() {
     return (
         <section id="about" className="border-t border-[var(--color-border)] px-5 py-24 sm:px-8 lg:px-10 lg:py-32">
             <div className="mx-auto max-w-6xl">
-                <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
+                <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
 
                     <SectionHeading
                         eyebrow="A little context"
                         title="Building with purpose, teaching with patience."
                     />
 
-                    <div className="grid gap-10 lg:grid-cols-[1fr_0.7fr] lg:gap-14">
+                    <div className="grid gap-8 lg:grid-cols-[1fr_0.7fr] lg:gap-12">
                         <SectionReveal>
-                            <p className="font-display text-xl leading-9 tracking-[-0.025em] text-ink/80 sm:text-2xl sm:leading-10">
+                            <p className="max-w-[58ch] font-display text-lg leading-8 tracking-[-0.02em] text-ink/80 sm:text-xl sm:leading-9">
                                 {profile.bio}
                             </p>
-                            <p className="mt-6 text-[15px] leading-7 text-muted">
+                            <p className="mt-5 max-w-[58ch] text-[15px] leading-7 text-muted">
                                 Currently pursuing a B.Ed. alongside active software development — bringing the same rigour to pedagogy as to production code.
                             </p>
                         </SectionReveal>

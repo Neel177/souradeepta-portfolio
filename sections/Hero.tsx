@@ -43,7 +43,7 @@ export function Hero() {
         <>
             <section
                 id="top"
-                className="relative overflow-x-clip px-5 pb-16 pt-28 sm:pb-20 sm:pt-36 lg:px-10 lg:pb-24 lg:pt-35"
+                className="relative overflow-x-clip px-5 pb-16 pt-28 sm:pb-20 sm:pt-32 lg:px-10 lg:pb-24 lg:pt-32"
             >
                 {/* Ambient background gradients */}
                 <div className="pointer-events-none absolute inset-0 bg-gradient-hero" />
@@ -136,7 +136,7 @@ export function Hero() {
                         {/* Headline */}
                         <motion.h1
                             variants={fadeUp}
-                            className="mt-3 min-w-0 break-words font-display text-[clamp(2.5rem,10vw,3.8rem)] font-bold leading-[0.96] tracking-[-0.05em] text-ink"
+                            className="mt-3 min-w-0 break-words font-display text-[clamp(2.35rem,9vw,3.6rem)] font-semibold leading-[0.99] tracking-[-0.052em] text-ink"
                         >
                             CS Educator
                             <br />
@@ -151,7 +151,7 @@ export function Hero() {
                         {/* Tagline */}
                         <motion.p
                             variants={fadeUp}
-                            className="mt-5 max-w-sm font-display text-[15px] leading-7 text-ink/75"
+                            className="mt-5 max-w-sm font-display text-base leading-[1.75] text-ink/75"
                         >
                             {profile.tagline}
                         </motion.p>
