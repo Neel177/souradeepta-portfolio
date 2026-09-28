@@ -18,23 +18,52 @@ export function Navbar() {
     const contactLink = profile.socials.find((s) => s.label === "Email");
     const closeRef = useRef<HTMLButtonElement>(null);
 
-    /* Active-section tracking */
+    /* Keep the link aligned with the section crossing the viewport focus band. */
     useEffect(() => {
         const sections = visibleLinks
             .map((link) => document.querySelector(link.href))
             .filter(Boolean) as Element[];
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const visible = entries
-                    .filter((e) => e.isIntersecting)
-                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-                if (visible?.target.id) setActive(`#${visible.target.id}`);
-            },
-            { rootMargin: "-25% 0px -65%", threshold: [0.05, 0.25, 0.5] },
-        );
-        sections.forEach((s) => observer.observe(s));
-        return () => observer.disconnect();
+        if (!sections.length) return;
+        const updateActive = () => {
+            const focusY = window.innerHeight * 0.4;
+            if (sections[0].getBoundingClientRect().top > focusY) {
+                setActive((current) => current === "" ? current : "");
+                return;
+            }
+            let closest: Element | undefined;
+            let closestDistance = Number.POSITIVE_INFINITY;
+            let closestVisibleHeight = -1;
+            sections.forEach((section) => {
+                const rect = section.getBoundingClientRect();
+                const distance = focusY < rect.top ? rect.top - focusY : focusY > rect.bottom ? focusY - rect.bottom : 0;
+                const visibleHeight = Math.max(0, Math.min(rect.bottom, window.innerHeight * 0.46) - Math.max(rect.top, window.innerHeight * 0.34));
+                if (distance < closestDistance || (distance === closestDistance && visibleHeight > closestVisibleHeight)) {
+                    closest = section;
+                    closestDistance = distance;
+                    closestVisibleHeight = visibleHeight;
+                }
+            });
+            const nextActive = closest?.id ? `#${closest.id}` : "";
+            setActive((current) => current === nextActive ? current : nextActive);
+        };
+        let observer: IntersectionObserver | undefined;
+        const observeFocusBand = () => {
+            observer?.disconnect();
+            const topInset = Math.round(window.innerHeight * 0.34);
+            const bottomInset = Math.round(window.innerHeight * 0.54);
+            observer = new IntersectionObserver(updateActive, {
+                rootMargin: `-${topInset}px 0px -${bottomInset}px 0px`,
+                threshold: 0,
+            });
+            sections.forEach((section) => observer?.observe(section));
+            updateActive();
+        };
+        observeFocusBand();
+        window.addEventListener("resize", observeFocusBand, { passive: true });
+        return () => {
+            observer?.disconnect();
+            window.removeEventListener("resize", observeFocusBand);
+        };
     }, []);
 
     /* Scroll shadow */
@@ -85,6 +114,7 @@ export function Navbar() {
                                 <a
                                     key={link.href}
                                     href={link.href}
+                                    aria-current={active === link.href ? "location" : undefined}
                                     className={cn(
                                         "relative py-1 text-[13px] font-medium tracking-[-0.01em] transition-colors duration-200",
                                         active === link.href
@@ -188,6 +218,7 @@ export function Navbar() {
                                     <motion.a
                                         key={link.href}
                                         href={link.href}
+                                        aria-current={active === link.href ? "location" : undefined}
                                         initial={{ opacity: 0, x: -8 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: i * 0.04 + 0.05, duration: 0.25, ease: "easeOut" }}

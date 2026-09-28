@@ -53,9 +53,9 @@ export function Projects() {
         <section id="projects" className="border-t border-[var(--color-border)] px-5 py-24 sm:px-8 lg:px-10 lg:py-32">
             <div className="mx-auto max-w-6xl">
                 <SectionHeading
-                    eyebrow="Selected work"
-                    title="Software that earns its place."
-                    description="A body of production-minded work across education, administration, mobile learning, and shared living."
+                    eyebrow="Projects"
+                    title="Selected Work"
+                    description="Some things I've built."
                 />
 
                 <motion.div

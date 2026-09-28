@@ -33,6 +33,8 @@ export interface ExperienceItem {
     description: string;
     bullets: string[];
     type: "work" | "education";
+    educationLevel?: "higher" | "school";
+    result?: string;
 }
 
 export interface Achievement {

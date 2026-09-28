@@ -41,6 +41,7 @@ export function SoftwareReactor() {
         let nodeDayColors: number[] = [];
         let nodeNightColors: number[] = [];
         let orbitGroups: import("three").Group[] = [];
+        let orbitBases: Array<{ x: number; y: number; z: number }> = [];
         let themeMaterials: Array<{ material: import("three").Material; day: number; night: number }> = [];
         let geometries: import("three").BufferGeometry[] = [];
         let materials: import("three").Material[] = [];
@@ -135,30 +136,36 @@ export function SoftwareReactor() {
             scrollPosition += (scrollTarget - scrollPosition) * Math.min(1, dt * 1.6);
             scrollVelocity *= Math.exp(-dt * 2.8);
             pulse *= Math.exp(-dt * 2.5);
-            const scrollTurn = scrollPosition * 0.12 + scrollVelocity * 0.008;
+            const progressTurn = scrollPosition * 0.78;
+            const velocityTurn = scrollVelocity * 0.035;
             if (rig) {
-                rig.rotation.x = parallaxY * 0.8 + Math.sin(now * 0.00011) * 0.018 + scrollTurn * 0.35;
-                rig.rotation.y = parallaxX * 0.8 + now * 0.000018 + scrollTurn;
-                rig.rotation.z = Math.sin(now * 0.00009) * 0.012 + scrollPosition * 0.035;
-                rig.position.set((compact ? 0.32 : 0.82) + parallaxX * 0.8, 0.18 - parallaxY * 0.65, -0.08 + pulse * 0.045);
+                rig.rotation.x = parallaxY * 0.8 + Math.sin(now * 0.00011) * 0.018 + progressTurn * 0.3 + velocityTurn * 0.3;
+                rig.rotation.y = parallaxX * 0.8 + now * 0.000018 + progressTurn + velocityTurn;
+                rig.rotation.z = Math.sin(now * 0.00009) * 0.012 + scrollPosition * 0.1 + velocityTurn * 0.35;
+                rig.position.set((compact ? 0.32 : 0.82) + parallaxX * 0.8, 0.18 - parallaxY * 0.65, -0.08 + pulse * 0.045 + scrollVelocity * 0.01);
                 rig.scale.setScalar(1 + pulse * 0.012);
             }
             if (core) {
-                core.rotation.y += dt * 0.045;
-                core.rotation.x = Math.sin(now * 0.00015) * 0.08 + scrollPosition * 0.08;
+                core.rotation.y = now * 0.000022 + progressTurn * 0.7 + velocityTurn * 0.5;
+                core.rotation.x = Math.sin(now * 0.00015) * 0.055 + scrollPosition * 0.18 + scrollVelocity * 0.012;
+                core.rotation.z = -scrollPosition * 0.11 - scrollVelocity * 0.01;
                 core.scale.setScalar(1 + Math.sin(now * 0.00065) * 0.004 + pulse * 0.012);
             }
             if (coreShell) {
-                coreShell.rotation.y -= dt * 0.018;
-                coreShell.rotation.z += dt * 0.012;
+                coreShell.rotation.x = scrollPosition * 0.16 + Math.sin(now * 0.00008) * 0.025;
+                coreShell.rotation.y = -now * 0.000012 + scrollPosition * 0.12;
+                coreShell.rotation.z = now * 0.000008 - scrollPosition * 0.14;
             }
             orbitGroups.forEach((group, index) => {
-                group.rotation.z += dt * (index % 2 ? -0.012 : 0.009);
-                group.rotation.x += dt * (index % 2 ? 0.003 : -0.002);
+                const base = orbitBases[index];
+                const direction = index % 2 ? -1 : 1;
+                group.rotation.z = base.z + now * 0.000008 * direction + scrollPosition * 0.2 * direction + velocityTurn * 0.45 * direction;
+                group.rotation.x = base.x + now * 0.000002 + scrollPosition * 0.09 + velocityTurn * 0.2;
             });
             if (network) {
-                network.rotation.y = Math.sin(now * 0.0002) * 0.035 + scrollTurn * 0.4;
-                network.rotation.x = Math.cos(now * 0.00016) * 0.025 + parallaxY * 0.35;
+                network.rotation.y = Math.sin(now * 0.0002) * 0.035 + progressTurn * 0.72 + velocityTurn * 0.6;
+                network.rotation.x = Math.cos(now * 0.00016) * 0.025 + progressTurn * 0.22 + velocityTurn * 0.25 + parallaxY * 0.35;
+                if (nodeMesh) nodeMesh.rotation.copy(network.rotation);
             }
             renderer.render(scene, camera);
             frame = requestAnimationFrame(animate);
@@ -286,6 +293,7 @@ export function SoftwareReactor() {
                     const radius = 1.06 + index * 0.2;
                     const group = new THREE.Group();
                     group.rotation.set(0.55 + index * 0.36, (index % 2 ? -0.52 : 0.35) + index * 0.08, index * 0.67);
+                    orbitBases.push({ x: group.rotation.x, y: group.rotation.y, z: group.rotation.z });
                     const dayPalette = [0x38b8d1, 0x7269dc, 0x8b72d4, 0x54b7c8];
                     const nightPalette = [0x55cde8, 0x887cff, 0xb274e0, 0x6aa7fb];
                     const material = registerTheme(new THREE.MeshBasicMaterial({ color: nightPalette[index], transparent: true, opacity: index === 0 ? 0.5 : 0.36, depthWrite: false }), dayPalette[index], nightPalette[index]);

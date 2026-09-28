@@ -19,6 +19,10 @@ const typeStyles = {
 };
 
 export function Experience() {
+    const work = experience.filter((item) => item.type === "work");
+    const higherEducation = experience.filter((item) => item.educationLevel === "higher");
+    const schoolEducation = experience.filter((item) => item.educationLevel === "school");
+
     return (
         <section id="experience" className="px-5 py-24 sm:px-8 lg:px-10 lg:py-32">
             <div className="mx-auto max-w-6xl">
@@ -32,7 +36,7 @@ export function Experience() {
                     {/* Timeline line — gradient */}
                     <div className="absolute bottom-4 left-[1.35rem] top-4 w-px bg-gradient-to-b from-amber/60 via-violet/40 to-violet/20 sm:left-[1.85rem]" />
 
-                    {experience.map((item) => {
+                    {work.map((item) => {
                         const style = typeStyles[item.type];
                         const Icon = item.type === "work" ? BriefcaseBusiness : GraduationCap;
 
@@ -81,6 +85,60 @@ export function Experience() {
                             </SectionReveal>
                         );
                     })}
+                </div>
+
+                <div className="mt-16 border-t border-[var(--color-border)] pt-10 sm:mt-20 sm:pt-12">
+                    <div className="max-w-2xl">
+                        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-violet">Academic record</p>
+                        <h3 className="mt-3 font-display text-2xl font-bold tracking-[-0.035em] text-ink sm:text-3xl">
+                            Education &amp; Qualifications
+                        </h3>
+                    </div>
+
+                    <div className="mt-9">
+                        <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">Higher education</p>
+                        <div className="grid gap-4 md:grid-cols-2">
+                            {higherEducation.map((item) => (
+                                <SectionReveal key={item.id} className="h-full">
+                                    <article className="h-full rounded-2xl border border-[var(--color-border)] border-l-2 border-l-violet bg-[var(--color-surface)] p-5 sm:p-6">
+                                        <div className="flex items-start justify-between gap-3">
+                                            <div className="min-w-0">
+                                                <h4 className="font-display text-base font-bold tracking-[-0.02em] text-ink sm:text-lg">{item.role}</h4>
+                                                <p className="mt-1.5 text-sm leading-6 text-muted">{item.organization}</p>
+                                            </div>
+                                            <span className="shrink-0 rounded-full border border-[var(--color-border)] px-2.5 py-1 font-mono text-[10px] text-muted">{item.period}</span>
+                                        </div>
+                                        {item.description && <p className="mt-3 text-[13px] leading-5 text-muted">{item.description}</p>}
+                                        <p className="mt-4 border-t border-[var(--color-border)] pt-3 text-xs text-muted">
+                                            Marks/CGPA: <span className="ml-2 font-semibold text-ink">{item.result}</span>
+                                        </p>
+                                    </article>
+                                </SectionReveal>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="mt-9">
+                        <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">School education</p>
+                        <div className="grid gap-4 md:grid-cols-2">
+                            {schoolEducation.map((item) => (
+                                <SectionReveal key={item.id} className="h-full">
+                                    <article className="h-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-2)]/70 p-5 sm:p-6">
+                                        <div className="flex items-start justify-between gap-3">
+                                            <div className="min-w-0">
+                                                <h4 className="font-display text-base font-bold tracking-[-0.02em] text-ink sm:text-lg">{item.role}</h4>
+                                                <p className="mt-1.5 text-sm leading-6 text-muted">{item.organization}</p>
+                                            </div>
+                                            <span className="shrink-0 rounded-full border border-[var(--color-border)] px-2.5 py-1 font-mono text-[10px] text-muted">{item.period}</span>
+                                        </div>
+                                        <p className="mt-4 border-t border-[var(--color-border)] pt-3 text-xs text-muted">
+                                            Marks <span className="ml-2 font-semibold text-ink">{item.result}</span>
+                                        </p>
+                                    </article>
+                                </SectionReveal>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
